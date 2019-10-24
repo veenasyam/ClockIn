@@ -1,0 +1,22 @@
+﻿@model List<ClockInApp.Models.ClockInLogModel>
+
+@{
+    ViewData["Title"] = "Report";
+}
+<h1>@ViewData["Title"]</h1>
+
+<table width="60%">
+    <thead><tr><th>ClockTime</th><th>Reason</th><th>Type</th><tr></thead>
+    <tbody>
+        @{ foreach (var item in Model)
+            {
+        <tr>
+            <td>@item.ClockTime</td>
+            <td>@item.ShiftType</td>
+            <td>@item.ClockInType</td>
+
+        </tr>
+            }
+        }
+    </tbody>
+</table>

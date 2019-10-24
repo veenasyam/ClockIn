@@ -1,0 +1,110 @@
+﻿@model List<ClockInApp.Models.ClockInLogModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style type=text/css>
+
+
+    .clock {
+        border: 0;
+        height: 272px;
+        width: 200px;
+        display: inline-block;
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .clockActive {
+        background: green;
+    }
+
+    .clockInactive {
+        background: grey;
+    }
+
+    .clockActive:hover {
+        cursor: pointer;
+        opacity: .9;
+    }
+
+    .clockInactive:hover {
+    }
+
+    .Timer {
+        font-size: 1.2em;
+    }
+</style>
+<h3> Welcome  @ViewData["UserName"] </h3>
+
+<div class="text-center">
+
+    @if (DateTime.Now >= Convert.ToDateTime(ViewData["ShiftConfigStartTime"]) &&
+         DateTime.Now <= Convert.ToDateTime(ViewData["ShiftConfigEndTime"]))
+    {
+        if (Model.Count == 0)
+        {
+            <div class="clock clockActive" data-sfttype="Shift">Shift<br /><span class="curr-status">Start</span></div>
+            <div class="clock clockInactive" data-sfttype="Break">Break<br /><span class="curr-status">Start</span></div>
+            <div class="clock clockInactive" data-sfttype="Lunch">Lunch<br /><span class="curr-status">Start</span></div>
+        }
+        else
+        {
+            string itemClass = "";
+
+            string itemShift = Model.Where(x => x.ShiftType == "Shift").OrderByDescending(y => y.ClockTime).Select(x => x.DisplayClockInType).FirstOrDefault();
+            string itemBreak = Model.Where(x => x.ShiftType == "Break").OrderByDescending(y => y.ClockTime).Select(x => x.DisplayClockInType).FirstOrDefault();
+            string itemLunch = Model.Where(x => x.ShiftType == "Lunch").OrderByDescending(y => y.ClockTime).Select(x => x.DisplayClockInType).FirstOrDefault();
+
+            if (Model.Where(x => x.ShiftType == "Shift").OrderByDescending(y => y.ClockTime).Count() == 2)
+            {
+                itemClass = "clockInactive";
+                <div class="clock @(itemClass)" data-sfttype="Shift">Shift<br /><span class="curr-status">@(itemShift == null ? "Start" : itemShift)</span></div>
+                <div class="clock @(itemClass)" data-sfttype="Break">Break<br /><span class="curr-status">@(itemBreak == null ? "Start" : itemBreak)</span></div>
+                <div class="clock @(itemClass)" data-sfttype="Lunch">Lunch<br /><span class="curr-status">@(itemLunch == null ? "Start" : itemLunch)</span></div>
+            }
+            else if (Model.Where(x => x.ShiftType == "Shift").OrderByDescending(y => y.ClockTime).Count() == 1)
+            {
+                if ((Model.FindAll(x => x.ShiftType == "Break").Count % 2 == 0) && (Model.FindAll(x => x.ShiftType == "Lunch").Count % 2 == 0))
+                {
+                    <div class="clock clockActive" data-sfttype="Shift">Shift<br /><span class="curr-status">@(itemShift == null ? "Start" : itemShift)</span></div>
+                    <div class="clock clockActive" data-sfttype="Break">Break<br /><span class="curr-status">@(itemBreak == null ? "Start" : itemBreak)</span></div>
+                    <div class="clock clockActive" data-sfttype="Lunch">Lunch<br /><span class="curr-status">@(itemLunch == null ? "Start" : itemLunch)</span></div>
+                }
+                if ((Model.FindAll(x => x.ShiftType == "Break").Count % 2 == 1) && (Model.FindAll(x => x.ShiftType == "Lunch").Count % 2 == 0))
+                {
+                    <div class="clock clockInactive" data-sfttype="Shift">Shift<br /><span class="curr-status">@(itemShift == null ? "Start" : itemShift)</span></div>
+                    <div class="clock clockActive" data-sfttype="Break">Break<br /><span class="curr-status">@(itemBreak == null ? "Start" : itemBreak)</span></div>
+                    <div class="clock clockInactive" data-sfttype="Lunch">Lunch<br /><span class="curr-status">@(itemLunch == null ? "Start" : itemLunch)</span></div>
+                }
+                if ((Model.FindAll(x => x.ShiftType == "Lunch").Count % 2 == 1) && (Model.FindAll(x => x.ShiftType == "Break").Count % 2 == 0))
+                {
+                    <div class="clock clockInactive" data-sfttype="Shift">Shift<br /><span class="curr-status">@(itemShift == null ? "Start" : itemShift)</span></div>
+                    <div class="clock clockInactive" data-sfttype="Break">Break<br /><span class="curr-status">@(itemBreak == null ? "Start" : itemBreak)</span></div>
+                    <div class="clock clockActive" data-sfttype="Lunch">Lunch<br /><span class="curr-status">@(itemLunch == null ? "Start" : itemLunch)</span></div>
+                }
+
+                itemClass = "clockInactive";
+
+            }
+        }
+    }
+    else
+    {
+        <div class="clock clockInactive" data-sfttype="Shift">Shift<br /><span class="curr-status">Start</span></div>
+        <div class="clock clockInactive" data-sfttype="Break">Break<br /><span class="curr-status">Start</span></div>
+        <div class="clock clockInactive" data-sfttype="Lunch">Lunch<br /><span class="curr-status">Start</span></div>
+        <p>You are done for the day </p>
+    }
+
+</div>
+<p>
+    <h5>@DateTime.Now</h5>
+    Your Shift is between  @ViewData["ShiftConfigStartTime"] and  @ViewData["ShiftConfigEndTime"]
+</p>
+
+
+
+
+

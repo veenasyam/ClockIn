@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA38d3465Chk2DMVVJZUvUXQAAAAACAAAAAAAQZgAAAAEAACAAAAA4nOVJ5M6mGUcRdAKrh1HpooY7Je8n68vbbiIde91mHAAAAAAOgAAAAAIAACAAAADR6FtGyXtMthUrNfLSRUsMoZcs4PvWLBorZVQogLIBlIAAAAAfhm76T+DEx7ACJprB/qh4K1j3llaSVBCJXetbz16hGV/CZAfRCNiQOaTm6Pti8Yrtzgl/bbs9gLydaVyq0zHM2IxCbwxFGp5mtL9c0uEC0M6vfbsVZcIMKa6GFBXH5qzc7janjZqSO71HBs4QdHiSkil3lI3ICiY9gGyjde4bgkAAAABzHg2w8am4QXYcUVB93gRlzi01LWyjJAvxEL794ui+vG+iZQ4XEbi+93mGeUF4/5l/sMkFgM7Gu0lpCeD2SbiU</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="ClockInAppConnection">
+      <Value>Data Source=tcp:mytcserver.database.windows.net,1433%3bInitial Catalog=TimeClock%3bIntegrated Security=False%3bUser Id=tcadmin%3bPassword=LQCFepLW:VvtI7o%3bEncrypt=True%3bTrustServerCertificate=False%3bMultipleActiveResultSets=True</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>
